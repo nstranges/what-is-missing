@@ -1,27 +1,5 @@
-# expert-chat
-Studying the interaction of LLM models when discussing different topics. Using open-source models in the Hugging Face Transformers library.
-
-## Overview
-The goal of this project is to analyze the interaction between different AI models and explore ways to fine-tune them for more expert-like communication. The approach is inspired by how human teachers give feedback to students. The teacher model will rate the student model and that rating will be used to improve the student.
-
-Ratings are first determined by a numerical score from 1-10 (10 being high). The second rating metric is a WIM (What Is Missing) response from the judging model. The WIM response will be compared to the student model's response using cosine similarity to "rate" the knowledge content. The idea is that the actor will try to maximize the knowledge content given in its response. [Online DPO](https://huggingface.co/papers/2402.04792) (Direct Preference Optimization) is used to fine-tune the models based on these rewards.
-
-## Approach
-I created a custom ExpertChat parent class that allows the seamless interaction between two LLMs. Each model has its own child class for model specific parameters. The ExpertChat class is used to create the rating system. A judge in Hugging Face's TRL library is defined to complete the ratings defined above for a prompt only response from the student LLM. There is a hyperparameter $\zeta$ that defines how strong to weight the WIM cosine similarity. Online DPO is performed by the TRL library on the training cluster. Experiments were tracked by Comet.ml because of the restrictions on the Compute Canada clusters.
-
-## Reward Model Overview
-  1. **Adjust Rating Range**:  
-    $\text{rating} = \frac{\text{ratingFeedback} - 5}{5}$  
-    This adjusts the rating to a range of -1 to 1.
-  2. **Calculate Sentence Embeddings**:  
-     $\text{response} = \text{sentenceEmbedding}(\text{responseText})$  
-     $\text{wim} = \text{sentenceEmbedding}(\text{wimText})$
-
-  4. **Calculate Cosine Similarity**:  
-    $\text{similarity} = \text{cosSimilarity}(\text{response}, \text{wim})$
-
-  5. **Compute Weighted Reward Score**:  
-    $\text{reward} = ((1 - \zeta) \times \text{rating}) + (\zeta \times \text{similarity})$
+# what-is-missing
+The code for the paper "What Is Missing: Interpretable Ratings For Large Language Model Outputs. The paper can be found here.
 
 ## Models
 
