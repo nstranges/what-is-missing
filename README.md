@@ -60,8 +60,10 @@ pip install --no-index trl
 
 On the Beluga cluster, each node provides 64GB of GPU RAM, 16GB in each GPU. By using quantization with 4-bit parameters, the Mixtral model will require approximately 27GB of GPU memory. Llama 3-8B is listed to require 16Gb of GPU memory. Running both models requires 43GB. I found that there was just under the required amount of memory with 3 GPUs. I requested 4 GPUs for a total of 64GB GPU RAM. RAM is also required for the sentence transformer model but 64GB should still be sufficient.
 
+NOTE: This does not include any extra overhead for the training models. The numbers listed above are strictly for inference.
 
-## Running on the Cluster
+
+## Running on a Cluster
 
 To run the models on a cluster, use the following command:
 ```bash
